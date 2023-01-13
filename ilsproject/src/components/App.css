@@ -1,6 +1,12 @@
 .App {
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 1215px){
+  .App {
     display: flex;
-    text-align: center;
-    gap: 10px;
+    flex-direction: row;
   }
-  
+
+}

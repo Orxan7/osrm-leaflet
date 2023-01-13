@@ -1,40 +1,23 @@
 import React from "react";
-import { MapContainer, TileLayer, Marker, Popup, Polyline  } from "react-leaflet";
-import L from "leaflet";
+import { MapContainer, TileLayer  } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
+import './Map.css';
+import RoutingMachine from "./RouteMachine";
+import { useState } from "react";
 
 
-const polyline = [
-    [51.505, -0.09],
-    [51.51, -0.1],
-  ]
-
-const defaultCenter = [38.9072, -77.0369];
 const defaultZoom = 8;  
 
-const customMarker = new L.icon({
-    iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png",
-    iconSize: [25, 41],
-    iconAnchor: [10, 41],
-    popupAnchor: [2, -40]
-});
+export default function Map({ routes, waypoints }) {
+    const [mapp, setMapp] = useState()
 
-
-export default function Map() {
     return (
-        <MapContainer center={polyline[0]} zoom={defaultZoom} scrollWheelZoom={false}>
+        <MapContainer center={waypoints===undefined?[55.751244, 37.618423]:[
+            waypoints[0].loacation,
+            waypoints[1].location
+          ]} zoom={defaultZoom} ref={map=>setMapp(map)}>
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; <a href=&quot;https://www.openstreetmap.org/copyright&quot;>OpenStreetMap</a> contributors" />
-            <Marker position={polyline[0]} icon={customMarker}>
-                <Popup>
-                A pretty CSS3 popup. <br /> Easily customizable.
-                </Popup>
-            </Marker>
-            <Marker position={polyline[1]} icon={customMarker}>
-                <Popup>
-                A pretty CSS3 popup. <br /> Easily customizable.
-                </Popup>
-            </Marker>
-            <Polyline positions={polyline} />
+            <RoutingMachine routes={routes} waypoints={waypoints} mapp={mapp}/>
         </MapContainer>
     )
 }

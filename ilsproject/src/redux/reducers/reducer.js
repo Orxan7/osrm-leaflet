@@ -1,14 +1,11 @@
 export default function reducer(state={}, action) {
     
     switch(action.type) {
-        case 'CHANGE_TRACK':
-            console.log(action.payload)
-            const { fst_x, fst_y, snd_x, snd_y } = action.payload;
+        case 'CHANGE_TRACK_SUCCESS':
+            const { routes, waypoints } = action.payload.payload;
             return {
-                fst_x,
-                fst_y,
-                snd_x,
-                snd_y
+                routes: routes,
+                waypoints: waypoints
             }
         default:
           return state;
